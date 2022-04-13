@@ -1,0 +1,3 @@
+<ul *ngIf="images$ | async as images">
+  <li *ngFor="let item of images">{{ item.imageFileName }}</li>
+</ul>

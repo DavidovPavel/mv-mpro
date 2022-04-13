@@ -1,0 +1,29 @@
+<ng-container *ngIf="row.type!==0">
+  <div *ngIf="row.blocked===1 || row.blocked===2; else stat" class="accent">
+    <b>Заблокирован{{ isManTypeCode(row.code) ? '' : 'a' }} {{ row.blocked===2 ? 'в CRM': '' }}</b>
+  </div>
+  <ng-template #stat>
+    <div [ngSwitch]="row.status">
+      <b *ngSwitchCase="0" class="warn"> Не актив{{ isManTypeCode(row.code) ? 'ен' : 'на' }} </b>
+      <b *ngSwitchCase="1" class="green">
+        Актив{{ isManTypeCode(row.code) ? 'ен' : 'на' }}{{ row.count > 1 ? (', ' + row.count + ' применений') : '' }}</b>
+      <span *ngSwitchDefault> Не определен </span>
+    </div>
+  </ng-template>
+</ng-container>
+
+<div class="small">
+  <ng-container *ngIf="(row.used || row.count===0); else notUse">
+    <span class="accent">
+      Использован{{ isManTypeCode(row.code) ? '' : 'a' }}
+      <ng-container *ngIf="row.authorizationDate">
+        {{ row.authorizationDate | date }} <span *ngIf="row.authorizationShop">в {{ row.authorizationShop }}</span>
+        {{ balanceInfo(row.authorizationBalance) }}</ng-container>
+    </span>
+  </ng-container>
+  <ng-template #notUse>
+    <span class="green">(Не использован{{ isManTypeCode(row.code) ? '': 'a' }})</span>
+  </ng-template>
+</div>
+
+<b *ngIf="row.isArchive" class="accent small">В архиве</b>

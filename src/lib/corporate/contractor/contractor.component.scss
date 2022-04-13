@@ -1,0 +1,15 @@
+@import '../../styles/form';
+:host {
+  text-align: center;
+  display: block;
+
+  h1 {
+    font-weight: 400;
+    font-size: 20px;
+  }
+}
+
+.fixed {
+  position: fixed;
+  top: 70px;
+}

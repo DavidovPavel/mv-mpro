@@ -1,0 +1,164 @@
+  <div [formGroup]="form">
+
+    <mpr-list-control [input]="form.get('items')">
+      <span class="label">Номера инструментов</span>
+    </mpr-list-control>
+
+    <div fxLayout fxLayoutAlign="center" fxLayoutGap="20px">
+
+      <mat-form-field appearance="fill" fxFlex="49%" #dateFromField>
+        <mat-label>Начало авторизации</mat-label>
+        <input matInput [matDatepicker]="dateFrom" formControlName="dateFrom">
+        <mat-datepicker-toggle matSuffix [for]="dateFrom" #dateFromDpt></mat-datepicker-toggle>
+        <mat-datepicker #dateFrom></mat-datepicker>
+        <mpr-reset-value-field [field]="form.get('dateFrom')" (isNull)="toggleClass($event, dateFromField)" matSuffix></mpr-reset-value-field>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" fxFlex="49%" #dateToField>
+        <mat-label>Окончание авторизации</mat-label>
+        <input matInput [matDatepicker]="dateTo" formControlName="dateTo">
+        <mat-datepicker-toggle matSuffix [for]="dateTo"></mat-datepicker-toggle>
+        <mat-datepicker #dateTo></mat-datepicker>
+        <mpr-reset-value-field [field]="form.get('dateTo')" (isNull)="toggleClass($event, dateToField)" matSuffix></mpr-reset-value-field>
+      </mat-form-field>
+    </div>
+
+    <mat-form-field appearance="fill" #balanceField>
+      <mat-label>Баланс ({{currencySymbol}})</mat-label>
+      <input matInput formControlName="balance">
+      <mpr-reset-value-field [field]="form.get('balance')" (isNull)="toggleClass($event, balanceField)" matSuffix></mpr-reset-value-field>
+      <mat-error *ngIf="hasError('balance', 'pattern')">Введенное значение не валидно!</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Статус</mat-label>
+      <mat-select formControlName="status">
+        <mat-option value="">Не выбрано</mat-option>
+        <mat-option value="1">Активна</mat-option>
+        <mat-option value="0">Не активна</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Заблокирована</mat-label>
+      <mat-select formControlName="blocked">
+        <mat-option value="">Не выбрано</mat-option>
+        <mat-option value="0">Нет</mat-option>
+        <mat-option value="1">Да</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <p fxLayout fxLayoutAlign="center" fxLayoutGap="20px">
+
+      <mat-form-field appearance="fill" fxFlex="49%">
+        <mat-label>Использована</mat-label>
+        <mat-select formControlName="used">
+          <mat-option value="">Не выбрано</mat-option>
+          <mat-option value="false">Нет</mat-option>
+          <mat-option value="true">Да</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" fxFlex="49%">
+        <mat-label>Продлена</mat-label>
+        <mat-select formControlName="prolongated">
+          <mat-option value="">Не выбрано</mat-option>
+          <mat-option value="false">Нет</mat-option>
+          <mat-option value="true">Да</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </p>
+
+    <mat-form-field appearance="fill" #wareCodeField>
+      <mat-label>WareCode</mat-label>
+      <input matInput formControlName="wareCode">
+      <mpr-reset-value-field [field]="form.get('wareCode')" (isNull)="toggleClass($event, wareCodeField)" matSuffix>
+      </mpr-reset-value-field>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" #poolNameField>
+      <mat-label>Пул/Макет</mat-label>
+      <input matInput formControlName="poolName">
+      <mpr-reset-value-field [field]="form.get('poolName')" (isNull)="toggleClass($event, poolNameField)" matSuffix></mpr-reset-value-field>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" #discountField>
+      <mat-label>Скидка</mat-label>
+      <input matInput formControlName="discount">
+      <mpr-reset-value-field [field]="form.get('discount')" (isNull)="toggleClass($event, discountField)" matSuffix></mpr-reset-value-field>
+      <mat-error *ngIf="hasError('count', 'pattern')">Введенное значение не валидно!</mat-error>
+    </mat-form-field>
+
+
+    <mat-form-field appearance="fill" #activationDiscountField>
+      <mat-label>Скидка контрагента (%)</mat-label>
+      <input matInput formControlName="activationDiscount">
+      <mpr-reset-value-field [field]="form.get('activationDiscount')" (isNull)="toggleClass($event, activationDiscountField)" matSuffix>
+      </mpr-reset-value-field>
+      <mat-error *ngIf="hasError('count', 'pattern')">Введенное значение не валидно!</mat-error>
+      <mat-error *ngIf="hasError('activationDiscount', 'min')">Введенное значение не может быть меньше 0!</mat-error>
+      <mat-error *ngIf="hasError('activationDiscount', 'max')">Введенное значение не может быть больше 99!</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" #notesField>
+      <mat-label>Примечание</mat-label>
+      <textarea matInput formControlName="notes"></textarea>
+      <mpr-reset-value-field [field]="form.get('notes')" (isNull)="toggleClass($event, notesField)" matSuffix></mpr-reset-value-field>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" #countField>
+      <mat-label>К-во применений</mat-label>
+      <input matInput formControlName="count">
+      <mpr-reset-value-field [field]="form.get('count')" (isNull)="toggleClass($event, countField)" matSuffix></mpr-reset-value-field>
+      <mat-error *ngIf="hasError('count', 'pattern')">Введенное значение не валидно!</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" #orderNumberField>
+      <mat-label>Номер заказа</mat-label>
+      <input matInput formControlName="orderNumber">
+      <mpr-reset-value-field [field]="form.get('orderNumber')" (isNull)="toggleClass($event, orderNumberField)" matSuffix></mpr-reset-value-field>
+      <mat-error *ngIf="hasError('orderNumber', 'pattern')">Введенное значение не валидно!</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" #goodsGroupCodeField>
+      <mat-label>Код товарной группы</mat-label>
+      <input matInput formControlName="goodsGroupCode">
+      <mpr-reset-value-field [field]="form.get('goodsGroupCode')" (isNull)="toggleClass($event, goodsGroupCodeField)" matSuffix>
+      </mpr-reset-value-field>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" #goodsCodeField>
+      <mat-label>Код товара</mat-label>
+      <input matInput formControlName="goodsCode">
+      <mpr-reset-value-field [field]="form.get('goodsCode')" (isNull)="toggleClass($event, goodsCodeField)" matSuffix></mpr-reset-value-field>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" #brandCodeField>
+      <mat-label>Код бренда</mat-label>
+      <input matInput formControlName="brandCode">
+      <mpr-reset-value-field [field]="form.get('brandCode')" (isNull)="toggleClass($event, brandCodeField)" matSuffix></mpr-reset-value-field>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" #objectCodeField>
+      <mat-label>Коды объектов</mat-label>
+      <input matInput formControlName="objectCode">
+      <mpr-reset-value-field [field]="form.get('objectCode')" (isNull)="toggleClass($event, objectCodeField)" matSuffix></mpr-reset-value-field>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Комментарий к операции</mat-label>
+      <textarea matInput formControlName="comment" required></textarea>
+      <mat-error *ngIf="hasError('comment', 'required')">Поле обязательно для заполнения!</mat-error>
+    </mat-form-field>
+  </div>
+
+  <hr>
+  <p><button mat-raised-button color="accent" (click)="change()">Применить изменения</button></p>
+  &nbsp;
+  <p>
+    <mpr-list-result [result]="result$ | async"></mpr-list-result>
+  </p>
+
+  <ng-template #confirm let-data>
+    <div>Всего инструментов: <b>{{ data.count }}</b></div>
+  </ng-template>

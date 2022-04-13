@@ -1,0 +1,10 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../../../dist/out-tsc",
+    "types": []
+  },
+  "files": ["src/plugin.ts"],
+  "exclude": ["src/index.ts", "src/test-setup.ts", "**/*.spec.ts", "src/environments/routes.dev.ts"],
+  "include": ["**/*.ts"]
+}

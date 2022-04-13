@@ -1,0 +1,31 @@
+<h1 mprHideEmpty>Информация</h1>
+<div>
+  <a fck-nav-tile routerLink="information" *ngxPermissionsOnly="permissions.CardsView">
+    Информация по ПК, промокодам и ВПС
+  </a>
+</div>
+
+<h1 mprHideEmpty>Администратор</h1>
+<div>
+  <a fck-nav-tile *ngxPermissionsOnly="permissions.CardsGenerate" routerLink="administrator/cards-generation">Генерация карт</a>
+  <a fck-nav-tile *ngxPermissionsOnly="permissions.ManualEdit" routerLink="administrator/operation-manual">Ручные операции с ПК или ВПС</a>
+</div>
+
+<h1 mprHideEmpty>Операции</h1>
+<div>
+  <a fck-nav-tile *ngxPermissionsOnly="permissions.CardsActivation" routerLink="operation/activation">Активация ПК</a>
+  <a fck-nav-tile *ngxPermissionsOnly="permissions.CardsBlock" routerLink="operation/blocking">Блокировка ПК или ВПС</a>
+  <a fck-nav-tile *ngxPermissionsOnly="permissions.CardsProlongation" routerLink="operation/prolongation">Пролонгация ПК или ВПС</a>
+  <a fck-nav-tile *ngxPermissionsOnly="permissions.CancelingLast" routerLink="operation/canceling">Отмена последней транзакции</a>
+</div>
+
+<h1 mprHideEmpty>Корпоративный отдел</h1>
+<div>
+  <a fck-nav-tile *ngxPermissionsOnly="permissions.CorpCustomers" routerLink="corporate/contractors">Справочник контрагентов</a>
+  <a fck-nav-tile *ngxPermissionsOnly="permissions.CorpOrders" routerLink="corporate/orders">Заказы</a>
+</div>
+
+<h1 mprHideEmpty>Оператор ЦОК</h1>
+<div>
+  <a fck-nav-tile *ngxPermissionsOnly="permissions.CcInterface" routerLink="operation/interface">Интерфейс оператора контакт-центра</a>
+</div>

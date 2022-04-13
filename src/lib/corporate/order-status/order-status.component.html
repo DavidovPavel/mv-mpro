@@ -1,0 +1,4 @@
+{{orderStatusName[order.orderStatus]}}
+<div *ngIf="order.paymentDate">Оплачен: {{ order.paymentDate | date:'dd.MM.yyyy' }}</div>
+<div *ngIf="order.activated">Активирован: {{ order.activationDate | date:'dd.MM.yyyy' }}</div>
+<div *ngIf="order.blocked">Заблокирован</div>

@@ -1,0 +1,36 @@
+<h1>Состояние счёта ({{ options.label }})</h1>
+
+<p>
+  <label>Текущий баланс ({{ options.label }}):</label>&nbsp;<span>{{ balance / 100 | currency:'RUB':'symbol':'3.2-2' }}</span>
+</p>
+
+<p fxLayout fxLayoutAlign="center center" [formGroup]="form" fxLayoutGap="20px">
+  <mat-form-field fxFlex>
+    <mat-label>Операция</mat-label>
+    <mat-select formControlName="operation">
+      <mat-option [value]="">...</mat-option>
+      <mat-option [value]="1">Пополнить</mat-option>
+      <mat-option [value]="0">Списать</mat-option>
+    </mat-select>
+    <mat-error *ngIf="hasError('operation', 'required')">Поле обязательно для заполнения!</mat-error>
+  </mat-form-field>
+  <mat-form-field fxFlex>
+    <mat-label>Сумма ({{ currencySymbol }})</mat-label>
+    <input matInput formControlName="value">
+    <mat-error *ngIf="hasError('value', 'required')">Поле обязательно для заполнения!</mat-error>
+    <mat-error *ngIf="hasError('value', 'pattern')">Введенное значение не валидно</mat-error>
+    <mat-error *ngIf="hasError('value', 'min')">Введенное значение не может быть меньше 0!</mat-error>
+  </mat-form-field>
+
+  <button mat-icon-button color="accent" (click)="do()" matTooltip="Выполнить операцию"  *ngxPermissionsOnly="permissions.CorpCustomersBalanceChange">
+    <mat-icon>check_circle_outline</mat-icon>
+  </button>
+</p>
+
+<p>
+  <mpr-list-result [result]="result$ | async"></mpr-list-result>
+</p>
+
+<div class="list" *ngIf="operations && operations.length">
+  <div *ngFor="let op of operations">{{ op }}</div>
+</div>

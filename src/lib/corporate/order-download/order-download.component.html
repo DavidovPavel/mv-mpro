@@ -1,0 +1,9 @@
+<mat-card>
+  <ng-container *ngIf="data$ | async as data">
+    <label>Пароль к архиву:</label>&nbsp;<b>{{ data.archivePassword }}</b>
+    <ul>
+      <li *ngFor="let item of data.archiveFiles"><a [href]="item">{{ item }}</a></li>
+    </ul>
+    <button mat-raised-button (click)="cancel()">Закрыть</button>
+  </ng-container>
+</mat-card>

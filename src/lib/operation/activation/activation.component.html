@@ -1,0 +1,45 @@
+<ng-container [formGroup]="form">
+  <mpr-list-control [input]="form.get('codes')">
+    <span class="label">Номера ПК или ВПС</span>
+    <span class="hint">Доступные типы: <b><mpr-payment-availables operation="activation"></mpr-payment-availables></b></span>
+  </mpr-list-control>
+
+  <mpr-list-control [input]="form.get('amount')" [style.marginBottom.px]="50">
+    <span class="label">Суммы ( {{ currencySymbol }} )</span>
+    <span class="hint">Если в списке присутствуют ТОЛЬКО карты фиксированного номинала и/или виртуальные подарочные сертификаты, данное поле будет
+      проигнорировано. В противном случае количество сумм должно соответствовать количеству строк в поле «Номера ПК».</span>
+  </mpr-list-control>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Агент / Клиент</mat-label>
+    <mat-select placeholder="Не выбран" formControlName="customerId">
+      <mat-option *ngFor="let item of customers$ | async" [value]="item.value">{{ item.title }}</mat-option>
+    </mat-select>
+    <mat-hint>При активации корпоративных подарочных карт обязательно указание Агента/Клиента для которого производится активация.</mat-hint>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Скидка, %</mat-label>
+    <input matInput formControlName="activationDiscount">
+    <mat-hint>При активации корпоративных подарочных карт обязательно указание скидки.</mat-hint>
+    <mat-error *ngIf="hasError('activationDiscount', 'pattern')">Введенное значение не валидно!</mat-error>
+    <mat-error *ngIf="hasError('activationDiscount', 'min')">Введенное значение не может быть меньше 0!</mat-error>
+    <mat-error *ngIf="hasError('activationDiscount', 'max')">Введенное значение не может быть больше 99!</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Комментарий к операции</mat-label>
+    <textarea matInput formControlName="comment" rows="2"></textarea>
+  </mat-form-field>
+</ng-container>
+
+<p [style.textAlign]="'center'">
+  <button mat-raised-button (click)="submit()" color="accent">Активировать</button>
+</p>
+
+<mpr-list-result [result]="result$ | async"></mpr-list-result>
+
+<ng-template #confirm let-data>
+  <div>Всего инструментов: <b>{{ data.count }}</b></div>
+  <div>Общая сумма: <b>{{ data.allAmount }} руб.</b></div>
+</ng-template>

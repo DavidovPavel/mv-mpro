@@ -1,0 +1,151 @@
+<ng-container [formGroup]="form">
+  <h1>Партнер</h1>
+  <mat-form-field appearance="fill">
+    <mat-label>Статус</mat-label>
+    <mat-select formControlName="status">
+      <mat-option [value]="1">Активен</mat-option>
+      <mat-option [value]="0">Не активен</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Тип</mat-label>
+    <mat-select formControlName="type">
+      <mat-option [value]="1">Агент</mat-option>
+      <mat-option [value]="2">Клиент</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+
+  <h1>Реквизиты организации</h1>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Полное название</mat-label>
+    <input matInput formControlName="fullCompanyName">
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Короткое название</mat-label>
+    <input matInput formControlName="shortCompanyName" required>
+    <mat-error *ngIf="hasError('shortCompanyName', 'required')">Поле обязательно для заполнения!</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>ИНН</mat-label>
+    <input matInput formControlName="inn" required>
+    <mat-error *ngIf="hasError('inn', 'required')">Поле обязательно для заполнения!</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>КПП</mat-label>
+    <input matInput formControlName="kpp">
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>ОГРН</mat-label>
+    <input matInput formControlName="ogrn">
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Юридический адрес</mat-label>
+    <textarea matInput formControlName="legalAddress"></textarea>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Фактический адрес</mat-label>
+    <textarea matInput formControlName="locationAddress"></textarea>
+  </mat-form-field>
+
+  <h1>Состояние счёта</h1>
+  <mat-form-field appearance="fill">
+    <mat-label>Овердрафт ({{currencySymbol}})</mat-label>
+    <input matInput formControlName="overdraft" type="number" required>
+    <mat-error *ngIf="hasError('overdraft', 'required')">Поле обязательно для заполнения!</mat-error>
+    <mat-error *ngIf="hasError('overdraft', 'pattern')">Введенное значение не валидно</mat-error>
+    <mat-error *ngIf="hasError('overdraft', 'min')">Введенное значение не может быть меньше 0!</mat-error>
+  </mat-form-field>
+
+  <h1>Контактная информация</h1>
+  <mat-form-field appearance="fill">
+    <mat-label>Ответственное лицо</mat-label>
+    <input matInput formControlName="directorName">
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Действует на основании</mat-label>
+    <mat-select formControlName="document">
+      <mat-option [value]="'0'">Устав</mat-option>
+      <mat-option [value]="'1'">Доверенность</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Контактное лицо</mat-label>
+    <input matInput formControlName="contactPerson">
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Email</mat-label>
+    <input matInput formControlName="contactEmail">
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Телефон</mat-label>
+    <input matInput formControlName="contactPhone">
+  </mat-form-field>
+
+  <h1>Реквизиты банка</h1>
+  <mat-form-field appearance="fill">
+    <mat-label>Навазние банка</mat-label>
+    <input matInput formControlName="bankName">
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Адрес банка</mat-label>
+    <textarea matInput formControlName="bankAddress"></textarea>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Расчетный счет</mat-label>
+    <input matInput formControlName="rs">
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Корреспондентский счет</mat-label>
+    <input matInput formControlName="ks">
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>БИК</mat-label>
+    <input matInput formControlName="bik">
+  </mat-form-field>
+
+  <h1>Дополнительная информация</h1>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Скидка (ВПС) (%)</mat-label>
+    <input matInput formControlName="customerDiscount" type="number">
+    <mat-error *ngIf="hasError('customerDiscount', 'pattern')">Введенное значение не валидно</mat-error>
+    <mat-error *ngIf="hasError('customerDiscount', 'min')">Введенное значение не может быть меньше 0!</mat-error>
+    <mat-error *ngIf="hasError('customerDiscount', 'max')">Введенное значение не может быть больше 100!</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Скидка (КПК) (%)</mat-label>
+    <input matInput formControlName="customerDiscountForCards" type="number">
+    <mat-error *ngIf="hasError('customerDiscountForCards', 'pattern')">Введенное значение не валидно</mat-error>
+    <mat-error *ngIf="hasError('customerDiscountForCards', 'min')">Введенное значение не может быть меньше 0!</mat-error>
+    <mat-error *ngIf="hasError('customerDiscountForCards', 'max')">Введенное значение не может быть больше 100!</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Примечания</mat-label>
+    <textarea matInput formControlName="notes"></textarea>
+  </mat-form-field>
+</ng-container>
+
+<p>
+  <button mat-raised-button (click)="add()" color="accent">Добавить</button>
+</p>
+
+<mpr-list-result [result]="result$ | async"></mpr-list-result>

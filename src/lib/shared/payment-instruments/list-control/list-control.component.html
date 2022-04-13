@@ -1,0 +1,9 @@
+<mat-form-field appearance="fill">
+  <mat-label><ng-content select=".label"></ng-content></mat-label>
+  <textarea matInput rows="5" [formControl]="inputControl" required>{{ value }}</textarea>
+  <mat-hint>
+    <ng-content select=".hint"></ng-content>
+  </mat-hint>
+  <mat-hint align="end">{{ inputCount$ | async }} / {{ (config$ | async)?.maxUiPacketSize }}</mat-hint>
+  <mat-error *ngIf="hasError('pattern')">Введенное значение не валидно!</mat-error>
+</mat-form-field>

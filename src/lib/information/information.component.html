@@ -1,0 +1,100 @@
+<div class="center">
+  <mpr-list-control [input]="inputControl" [value]="param$ | async">
+    <span class="label">Номера ПК, ВПС или промо-кодов</span>
+    <span class="hint">Доступные типы: <b><mpr-payment-availables operation="view"></mpr-payment-availables></b></span>
+  </mpr-list-control>
+  <p>
+    <button mat-raised-button color="accent" (click)="show(inputControl.value)">Вывести информацию</button>
+  </p>
+</div>
+
+<table mat-table #table [dataSource]="dataSource$">
+  <ng-container matColumnDef="code">
+    <th mat-header-cell *matHeaderCellDef> Полный номер </th>
+    <td mat-cell *matCellDef="let row">
+      <ng-container *ngIf="!row.errorMessage; else err">
+        <a [routerLink]="['/mprocessing/information', 'history', row.code]">{{row.code}}</a>
+      </ng-container>
+      <ng-template #err>{{row.code}} <i class="accent"> - {{ row.errorMessage }}</i></ng-template>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="id">
+    <th mat-header-cell *matHeaderCellDef> Короткий номер </th>
+    <td mat-cell *matCellDef="let row"> {{row.id}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="balance">
+    <th mat-header-cell *matHeaderCellDef> Баланс ({{ currencySymbol }}) </th>
+    <td mat-cell *matCellDef="let row"> {{ row.balance | currency: 'RUB' : '' : '0.0' }} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="status">
+    <th mat-header-cell *matHeaderCellDef> Статус </th>
+    <td mat-cell *matCellDef="let row" class="center">
+      <ng-container *ngIf="!row.errorCode">
+        <mpr-status-info [row]="row"></mpr-status-info>
+      </ng-container>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="type">
+    <th mat-header-cell *matHeaderCellDef> Тип </th>
+    <td mat-cell *matCellDef="let row" class="center">
+      <ng-container *ngIf="!row.errorCode">
+        <mpr-type-info [row]="row"></mpr-type-info>
+      </ng-container>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="wareCode">
+    <th mat-header-cell *matHeaderCellDef> ID акции </th>
+    <td mat-cell *matCellDef="let row"> <a href="{{ promocodeInfoURL }}{{ row.code }}" target="blank">{{row.wareCode}}</a> </td>
+  </ng-container>
+
+  <ng-container matColumnDef="dateFromA">
+    <th mat-header-cell *matHeaderCellDef> Дата начала активации </th>
+    <td mat-cell *matCellDef="let row" [ngClass]="{'accent': checkDateMoreCurrent(row.dateFromA), 'center': true}">
+      {{row.dateFromA | date: 'medium': 'GMT' }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="dateToA">
+    <th mat-header-cell *matHeaderCellDef> Дата окончания активации </th>
+    <td mat-cell *matCellDef="let row" [ngClass]="{'accent': checkDateLessCurrent(row.dateToA), 'center': true}">
+      {{row.dateToA | date: 'medium': 'GMT' }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="dateFrom">
+    <th mat-header-cell *matHeaderCellDef> Дата начала авторизации </th>
+    <td mat-cell *matCellDef="let row" [ngClass]="{'accent': checkDateMoreCurrent(row.dateFrom), 'center': true}">
+      {{row.dateFrom | date: 'medium': 'GMT' }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="dateTo">
+    <th mat-header-cell *matHeaderCellDef> Дата окончания авторизации </th>
+    <td mat-cell *matCellDef="let row" [ngClass]="{'accent': checkDateLessCurrent(row.dateTo), 'center': true}">
+      {{row.dateTo | date: 'medium': 'GMT' }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="poolName">
+    <th mat-header-cell *matHeaderCellDef> Макет </th>
+    <td mat-cell *matCellDef="let row" class="center"> {{row.poolName}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="orderNumber">
+    <th mat-header-cell *matHeaderCellDef> Эмитент </th>
+    <td mat-cell *matCellDef="let row"> {{row.orderNumber}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="notes">
+    <th mat-header-cell *matHeaderCellDef> Примечания </th>
+    <td mat-cell *matCellDef="let row"> {{row.notes}} </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="column"></tr>
+  <tr mat-row *matRowDef="let row; columns: column;"></tr>
+</table>

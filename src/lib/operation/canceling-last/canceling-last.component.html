@@ -1,0 +1,99 @@
+<div [formGroup]="form">
+  <p>
+    <mat-form-field>
+      <mat-label>Номер ПК, ВПС или Промокода</mat-label>
+      <input matInput formControlName="cardNum">
+    </mat-form-field>
+  </p>
+
+  <p>
+    <mat-form-field>
+      <mat-label>Комментарий</mat-label>
+      <textarea matInput formControlName="comment"></textarea>
+    </mat-form-field>
+  </p>
+
+  <p><button mat-raised-button color="accent" (click)="getLast()">Получить данные по последней транзакции</button></p>
+</div>
+
+<mat-card *ngIf="dataSource$ | async as row">
+  <ng-container *ngIf="!row.length; else err">
+    <div fxLayout="row wrap" fxLayoutGap="20px;" class="info">
+
+      <div>
+        <label> Дата операции </label>
+        <div>
+          {{row.dt | date:'dd.MM.yyyy hh:mm:ss'}}
+        </div>
+      </div>
+
+      <div>
+        <label> Тип ввода </label>
+        <div>
+          {{row.entType}}
+        </div>
+      </div>
+
+      <div>
+        <label> Тип операции </label>
+        <div>
+          {{row.opType}}
+        </div>
+      </div>
+
+      <div>
+        <label> Пользователь </label>
+        <div> {{ row.login }} </div>
+      </div>
+
+      <div>
+        <label> IP-адрес терминала </label>
+        <div> {{row.ipExternal}}</div>
+      </div>
+
+      <div>
+        <label> IP-адрес сервера </label>
+        <div> {{row.ipExternal}} </div>
+      </div>
+
+      <div>
+        <label> Сумма ({{ currencySymbol }}) </label>
+        <div>{{ row.amount | currency: 'RUB' : '' : '0.0' }}</div>
+      </div>
+
+      <div>
+        <label> Номер чека/заказа </label>
+        <div> {{row.orderId}} </div>
+      </div>
+
+      <div>
+        <label> Номер объекта </label>
+        <div> {{row.objectId}} </div>
+      </div>
+
+      <div>
+        <label> Магазин </label>
+        <div>
+          {{ row.systemId }}
+        </div>
+      </div>
+
+      <div fxFlex="100%">
+        <label> Комментарий </label>
+        <div>
+          {{ row.comment }}
+        </div>
+      </div>
+    </div>
+
+    <p>
+      <button mat-raised-button color="accent" (click)="canceling(row.trId)" *ngxPermissionsOnly="permissions.CancelingLast">Отменить последнюю
+        транзакцию</button>
+    </p>
+
+    <mpr-list-result [result]="result$ | async"></mpr-list-result>
+  </ng-container>
+  <ng-template #err>
+    <mpr-list-result [result]="row"></mpr-list-result>
+  </ng-template>
+</mat-card>

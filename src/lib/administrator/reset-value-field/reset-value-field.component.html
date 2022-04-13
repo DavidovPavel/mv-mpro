@@ -1,0 +1,6 @@
+<button class="redo-btn" mat-icon-button color="accent" matTooltip="Вернуть" (click)="redo()" *ngIf="isNill">
+  <mat-icon>redo</mat-icon>
+</button>
+<button mat-icon-button color="warn" matTooltip="Очистить" (click)="reset()" *ngIf="!isNill">
+  <mat-icon>clear</mat-icon>
+</button>

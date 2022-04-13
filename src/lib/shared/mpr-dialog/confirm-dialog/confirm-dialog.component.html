@@ -1,0 +1,12 @@
+<h1>Подтверждение</h1>
+<div>
+  <ng-container *ngTemplateOutlet="data?.template; context: {$implicit: data?.data};"></ng-container>
+</div>
+<p>
+  Вы уверены, что хотите продолжить выполнение операции?
+</p>
+<div>
+  <button mat-raised-button color="accent" [mat-dialog-close]="true" cdkFocusInitial>Да</button>
+  &nbsp;&nbsp;
+  <button mat-raised-button (click)="onNoClick()">Нет</button>
+</div>

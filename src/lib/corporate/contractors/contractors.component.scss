@@ -1,0 +1,12 @@
+@import '../../styles/_table.scss';
+
+p {
+  line-height: normal;
+  & button {
+    height: 40px;
+  }
+}
+
+::ng-deep .mat-button-toggle-label-content {
+  line-height: 36px!important;
+}

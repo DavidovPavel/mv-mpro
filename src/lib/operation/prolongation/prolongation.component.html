@@ -1,0 +1,33 @@
+<div [formGroup]="form">
+  <p>
+    <mpr-list-control [input]="form.get('codes')">
+      <span class="label">Номера ПК или ВПС</span>
+      <span class="hint">Доступные типы: <b>
+          <mpr-payment-availables operation="prolongation"></mpr-payment-availables>
+        </b></span>
+    </mpr-list-control>
+  </p>
+  <p>
+    <mat-form-field appearance="fill">
+      <mat-label>Новый срок действия</mat-label>
+      <input matInput [matDatepicker]="picker" formControlName="dateTo" required>
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+  </p>
+  <p>
+    <mat-form-field appearance="fill">
+      <mat-label>Комментарий к операции</mat-label>
+      <textarea matInput formControlName="comment" rows="5"></textarea>
+    </mat-form-field>
+  </p>
+</div>
+<p>
+  <button mat-raised-button (click)="submit()" color="accent">Осуществить пролонгацию</button>
+</p>
+
+<mpr-list-result [result]="result$ | async"></mpr-list-result>
+
+<ng-template #confirm let-data>
+  <div>Всего инструментов: <b>{{ data.count }}</b></div>
+</ng-template>

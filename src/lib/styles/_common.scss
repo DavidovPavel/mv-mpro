@@ -1,0 +1,24 @@
+h1 {
+  font-size: 1.4em;
+  font-weight: normal;
+  margin-top: 0;
+}
+
+.center {
+  text-align: center;
+}
+.green {
+  color: var(--color-accent);
+}
+
+.accent {
+  color: var(--color-primary);
+}
+
+.warn {
+  color: var(--color-warn);
+}
+
+.small {
+  font-size: small;
+}

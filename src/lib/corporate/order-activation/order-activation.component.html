@@ -1,0 +1,14 @@
+<mat-card>
+  <mat-form-field appearance="fill">
+    <mat-label>Комментарий к операции</mat-label>
+    <textarea matInput [formControl]="comment"></textarea>
+  </mat-form-field>
+  <p>
+    <button mat-raised-button (click)="cancel()">Закрыть</button>
+    &nbsp;&nbsp;
+    <button mat-raised-button (click)="done()" color="accent">Активировать</button>
+  </p>
+  <p>
+    <mpr-list-result [result]="result$ | async"></mpr-list-result>
+  </p>
+</mat-card>

@@ -1,0 +1,13 @@
+:host {
+  display: block;
+  margin: 20px;
+}
+
+ul {
+  width: 240px;
+  text-align: left;
+
+  & > img {
+    width: 240px;
+  }
+}

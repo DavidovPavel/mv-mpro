@@ -1,0 +1,28 @@
+@import '../../styles/table';
+@import '../../styles/common';
+
+:host {
+  display: block;
+
+  header {
+    position: relative;
+    height: 20px;
+
+    div {
+      position: absolute;
+      top: -10px;
+      width: 100%;
+      text-align: right;
+    }
+  }
+}
+
+.first::first-letter {
+  text-transform: uppercase;
+}
+
+tr.accent {
+  & td {
+    color: var(--color-warn);
+  }
+}

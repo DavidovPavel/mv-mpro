@@ -1,0 +1,11 @@
+{
+  "/api/mproc/": {
+    "target": "http://yc-uat.sp.mvideo.ru/",
+    "pathRewrite": {
+      "^/api/mproc/": "/mproc/"
+    },
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  }
+}

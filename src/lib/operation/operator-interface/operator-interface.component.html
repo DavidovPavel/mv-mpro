@@ -1,0 +1,126 @@
+<div [formGroup]="infoForm">
+  <p>
+    <mat-form-field>
+      <mat-label>Номер ПК, ВПС, промо-кода</mat-label>
+      <input matInput formControlName="cardNum">
+      <mat-hint>Доступные типы: <b>
+          <mpr-payment-availables operation="view"></mpr-payment-availables>
+        </b></mat-hint>
+    </mat-form-field>
+  </p>
+
+  <p>
+    <mat-form-field>
+      <mat-label>Штрих-код ПК</mat-label>
+      <input matInput formControlName="code">
+      <mat-hint>(для АПК, ВПС и МКМО не заполняется)</mat-hint>
+    </mat-form-field>
+  </p>
+
+  <p><button mat-raised-button color="accent" (click)="getInfo()">Вывести информацию</button></p>
+</div>
+
+<mat-card *ngIf="dataSource$ | async as row">
+  <ng-container *ngIf="!row.length; else err">
+    <div fxLayout="row wrap" fxLayoutGap="20px;" class="info">
+      <div>
+        <label> Номер </label>
+        <div>
+          <a [routerLink]="['/mprocessing/information', 'history', row.code]">{{row.code}}</a>
+        </div>
+      </div>
+
+      <div>
+        <label> Тип </label>
+        <div>
+          <mpr-type-info [row]="row"></mpr-type-info>
+        </div>
+      </div>
+
+      <div>
+        <label> ID акции </label>
+        <div> <a href="{{ promocodeInfoURL }}{{ row.code }}" target="blank">{{row.wareCode}}</a> </div>
+      </div>
+
+      <div>
+        <label> Макет </label>
+        <div> {{row.poolName}} </div>
+      </div>
+
+      <div>
+        <label> Номинал ({{ currencySymbol }}) </label>
+        <div> {{ row.activationBalance/100 | currency: 'RUB' : '' : '0.0' }} </div>
+      </div>
+
+      <div>
+        <label> Скидка ({{ currencySymbol }} / %) </label>
+        <div> {{ row.discount }} </div>
+      </div>
+
+      <div>
+        <label> Баланс ({{ currencySymbol }}) </label>
+        <div> {{ row.balance/100 | currency: 'RUB' : '' : '0.0' }} </div>
+      </div>
+
+      <div>
+        <label> Статус </label>
+        <div>
+          <mpr-status-info [row]="row"></mpr-status-info>
+        </div>
+      </div>
+
+      <div>
+        <label> Дата покупки (выдачи) </label>
+        <div>
+          {{ row.activationDate | date: 'dd.MM.yyyy': 'GMT' }}
+        </div>
+      </div>
+
+      <div>
+        <label> Место покупки (выдачи) </label>
+        <div>
+          {{ row.activationShop }}
+        </div>
+      </div>
+
+      <div>
+        <label> Период действия </label>
+        <div [ngClass]="{accent: checkDate(row)}">
+          {{ row.dateFrom | date: 'dd.MM.yyyy': 'GMT' }} - {{ row.dateTo | date: 'dd.MM.yyyy': 'GMT' }}
+        </div>
+      </div>
+
+      <div fxFlex="100%">
+        <label> Комментарий </label>
+        <div>
+          {{ row.notes }}
+        </div>
+      </div>
+
+    </div>
+
+    <div [formGroup]="blockForm" *ngIf="showForm">
+      <mat-form-field>
+        <mat-label>Введите комментарий и нажмите кнопку Продолжить</mat-label>
+        <textarea matInput formControlName="blockComment" required></textarea>
+      </mat-form-field>
+    </div>
+
+    <p>
+      <button mat-raised-button color="accent" (click)="prolongation()" [disabled]="!row.prolongated"
+        *ngxPermissionsOnly="permissions.CardsProlongation">Пролонгация</button>
+      &nbsp;&nbsp;
+      <ng-container *ngIf="!showForm">
+        <button mat-raised-button color="accent" (click)="showForm=true" *ngxPermissionsOnly="permissions.CardsBlock">Погасить</button>
+      </ng-container>
+      <ng-container *ngIf="showForm">
+        <button mat-raised-button color="accent" (click)="blocking()">Продолжить</button>
+        &nbsp;&nbsp;
+        <button mat-raised-button (click)="showForm=false;">Отменить</button>
+      </ng-container>
+    </p>
+
+    <mpr-list-result [result]="result$ | async"></mpr-list-result>
+  </ng-container>
+  <ng-template #err><mpr-list-result [result]="row"></mpr-list-result></ng-template>
+</mat-card>

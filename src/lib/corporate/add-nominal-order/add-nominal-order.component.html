@@ -1,0 +1,22 @@
+<p>
+  <button mat-raised-button (click)="add()">
+    <mat-icon>add</mat-icon>&nbsp;<span>Добавить номинал</span>
+  </button>
+</p>
+<ng-container [formGroup]="form">
+  <div *ngFor="let item of form.controls; let i=index" [formGroup]="item" fxLayout fxLayoutAlign="center center" fxLayoutGap="20px">
+    <mat-form-field appearance="fill">
+      <mat-label>Номинал ({{currencySymbol}})</mat-label>
+      <input matInput type="number" formControlName="nominal" required step="50" min="1">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Количество</mat-label>
+      <input matInput type="number" formControlName="quantity" min="1" required>
+    </mat-form-field>
+
+    <button mat-icon-button color="warn" (click)="clear(i)" matTooltip="Удалить номинал">
+      <mat-icon>clear</mat-icon>
+    </button>
+  </div>
+</ng-container>

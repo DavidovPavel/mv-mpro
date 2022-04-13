@@ -1,0 +1,21 @@
+:host {
+  max-width: 600px;
+  margin: 0 auto;
+  display: block;
+}
+
+h1 {
+  font-weight: 400;
+  font-size: 20px;
+}
+
+.list {
+  height: 150px;
+  overflow: auto;
+  text-align: left;
+  margin-bottom: 40px;
+}
+
+p {
+  min-height: 20px;
+}

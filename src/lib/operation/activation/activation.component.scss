@@ -1,0 +1,27 @@
+@import '../../styles/form';
+
+:host {
+  text-align: center;
+
+  label {
+    display: block;
+
+    mat-icon {
+      font-size: 20px;
+      width: auto;
+      height: auto;
+      color: rgb(49, 169, 209);
+      margin-left: 4px;
+    }
+  }
+
+  .mat-form-field,
+  mpr-list-control {
+    display: block;
+    margin: 0 auto 30px;
+  }
+}
+
+.mat-hint {
+  text-align: left;
+}

@@ -1,0 +1,11 @@
+:host {
+  display: block;
+
+  & div {
+    padding: 20px;
+  }
+}
+
+.mat-progress-bar {
+  position: fixed;
+}

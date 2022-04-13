@@ -1,0 +1,78 @@
+<div [formGroup]="form" fxLayout fxLayoutGap="20px">
+  <div>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Заказчик</mat-label>
+      <mat-select formControlName="customerId" required>
+        <mat-option *ngFor="let item of customer$ | async" [value]="item.customerId">{{ item.shortCompanyName }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Статус</mat-label>
+      <mat-select formControlName="orderStatus" #status>
+        <mat-option [value]="0">Не оплачен</mat-option>
+        <mat-option [value]="1">Оплачен</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" *ngIf="status.value===1">
+      <mat-label>Дата оплаты</mat-label>
+      <input matInput [matDatepicker]="pickerPaymentDate" formControlName="paymentDate">
+      <mat-datepicker-toggle matSuffix [for]="pickerPaymentDate"></mat-datepicker-toggle>
+      <mat-datepicker #pickerPaymentDate></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Скидка %</mat-label>
+      <input matInput type="number" formControlName="discount" min="0">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Номинал ({{currencySymbol}})</mat-label>
+      <input matInput type="number" step="50" min="1" formControlName="nominal">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Количество</mat-label>
+      <input matInput type="number" min="1" formControlName="quantity">
+    </mat-form-field>
+
+    <mpr-add-nominal-order (list)="changeNominal($event)"></mpr-add-nominal-order>
+
+  </div>
+
+  <div>
+    <b>Дизайн сертификатов</b>
+    <div class="preview" *ngIf="images$ | async as imgs">
+      {{ imgs[0].imageFileName }}
+    </div>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Формат</mat-label>
+      <mat-select formControlName="deliveryMethod">
+        <mat-option [value]="0">JPG</mat-option>
+        <mat-option [value]="1">PNG</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+
+    <mat-form-field appearance="fill">
+      <mat-label>Дата начала срока действия</mat-label>
+      <input matInput [matDatepicker]="picker" formControlName="validPeriodStartDate" required>
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Размер файла архива (Мб)</mat-label>
+      <input matInput type="number" formControlName="archiveSize">
+    </mat-form-field>
+  </div>
+</div>
+<p>
+  <button mat-raised-button color="accent" (click)="save()">Добавить заказ</button>
+</p>
+<p>
+  <mpr-list-result [result]="result$ | async"></mpr-list-result>
+</p>

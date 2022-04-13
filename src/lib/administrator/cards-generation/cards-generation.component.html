@@ -1,0 +1,67 @@
+<div [formGroup]="form">
+
+  <mat-form-field appearance="fill">
+    <mat-label>Префикс</mat-label>
+    <input matInput formControlName="prefix" type="number">
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Серия</mat-label>
+    <input matInput formControlName="series" type="number" min="1" max="99">
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Тип</mat-label>
+    <mat-select formControlName="type">
+      <mat-option [value]="0">Для физ-лиц</mat-option>
+      <mat-option [value]="1">Корпоративная</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Количество</mat-label>
+    <input matInput formControlName="count" type="number" min="1">
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Название пула</mat-label>
+    <input matInput formControlName="poolName">
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>WareCode</mat-label>
+    <mat-select formControlName="wareCode" required>
+      <mat-option *ngFor="let item of warecodes$ | async" [value]="item.wareCode">{{ item.name }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Начало авторизации</mat-label>
+    <input matInput [matDatepicker]="pickerStartDate" formControlName="startDate">
+    <mat-datepicker-toggle matSuffix [for]="pickerStartDate"></mat-datepicker-toggle>
+    <mat-datepicker #pickerStartDate></mat-datepicker>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Окончание авторизации</mat-label>
+    <input matInput [matDatepicker]="pickerEndDate" formControlName="endDate">
+    <mat-datepicker-toggle matSuffix [for]="pickerEndDate"></mat-datepicker-toggle>
+    <mat-datepicker #pickerEndDate></mat-datepicker>
+  </mat-form-field>
+
+
+  <!-- При выборе Серии вызывать сервис для определение доступного диапазона (TODO). -->
+
+  <p>
+    <button mat-raised-button color="accent" (click)="done()">Генерировать</button>
+  </p>
+
+  <!--
+    Генерация ВИП
+
+  Стартовый номер: 7 цифр (Например: 3000000)
+  Количество (число >0)
+  По кнопке ГЕНЕРИРОВАТЬ запускать сервис (TODO).
+  TODO:
+  Получение информации по сгенеренным картам. -->
+</div>
